@@ -75,7 +75,7 @@ function ActionButton:InitializeButton()
 	end
 
 	self:SetAttribute("type", "macro")
-	self:SetAttribute("*macrotext*", self.SanitizedMacro(self:GetMacroText()))
+	--self:SetAttribute("*macrotext*", self.SanitizedMacro(self:GetMacroText()))
 
 	self:SetAttribute("hotkeypri", self.keys.hotKeyPri)
 	self:SetAttribute("hotkeys", self.keys.hotKeys)
@@ -106,12 +106,20 @@ function ActionButton:InitializeButton()
 		self:SetAttribute("vehicleID_Offset", 132)
 	end
 
+
 	--This is so that hotkeypri works properly with priority/locked buttons
 	self:WrapScript(self, "OnShow", [[
 			for i=1,select('#',(":"):split(self:GetAttribute("hotkeys"))) do
 				self:SetBindingClick(self:GetAttribute("hotkeypri"), select(i,(":"):split(self:GetAttribute("hotkeys"))), self:GetName())
 			end
 			]])
+
+	local ready = self.SetBindingClick ~= nil
+	if ready and self:IsVisible() then
+		for i=1,select('#',(":"):split(self:GetAttribute("hotkeys"))) do
+			self:SetBindingClick(self:GetAttribute("hotkeypri"), select(i,(":"):split(self:GetAttribute("hotkeys"))), self:GetName())
+		end
+	end
 
 	self:SetFrameRef("uiparent", UIParent)
 	self:WrapScript(self, "OnHide", [[
@@ -194,6 +202,16 @@ function ActionButton:InitializeButton()
 	self:UpdateFlyout(true)
 
 	self:InitializeButtonSettings()
+
+	if ready then
+		self:Hide()
+		self:Show()
+	else
+		C_Timer.After(1, function()
+			self:Hide()
+			self:Show()
+		end)
+	end
 end
 
 function ActionButton:InitializeButtonSettings()
@@ -284,6 +302,9 @@ function ActionButton:SetupEvents()
 		self:RegisterEvent("UPDATE_OVERRIDE_ACTIONBAR", "UpdateAll")
 		self:RegisterEvent("UPDATE_BONUS_ACTIONBAR", "UpdateAll")
 	end
+
+	self:RegisterEvent("PLAYER_ALIVE", "PLAYER_ENTERING_WORLD")
+	self:PLAYER_ENTERING_WORLD()
 end
 
 function ActionButton:OnAttributeChanged(name, value)

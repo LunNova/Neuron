@@ -163,6 +163,10 @@ function Bar:CreateNewBar(class)
 	local newBar = Bar.new(class, barID) --create new bar
 
 	newBar.objTemplate.new(newBar, 1) --add at least 1 button to a new bar
+	newBar.editFrame = newBar.editFrame or
+				BarEditor.allocate(newBar, function(overlay, button, down)
+					overlay.bar:OnClick(button, down)
+				end)
 	Bar.ChangeSelectedBar(newBar)
 	newBar:Load() --load the bar
 	--TODO: Show the transparent blue overlay that we show in the edit mode
@@ -204,18 +208,25 @@ function Bar:DeleteBar()
 	self:SetPoint("CENTER")
 	self:Hide()
 
+
+	local data = Neuron.registeredBarData[self.class]
+
+	-- for k,v in pairs(self.barDB) do
+	-- 	v.oldId = k
+	-- end
+
 	table.remove(self.barDB, self.id) --removes the bar from the database, along with all of its buttons
 
-	for k,v in pairs(self.barDB) do
+	-- local first
+	-- for k,v in pairs(self.barDB) do
+	-- 	first = first or v
 
-		local oldID = v.id --keep track of the oldID
-
-		v.id = k --update the bar id to match the new index value, this is VERY important
-
-		if v.name == self.barLabel.." "..oldID then --if the name is name according to the oldID, update the name to the new ID (i.e. if they never changed the name, we don't want to overwrite custom names)
-			v.name = self.barLabel.." "..v.id
-		end
-	end
+	-- 	-- FIXME
+	-- 	-- if not v.name or v.name == self.barLabel.." "..v.oldID then --if the name is name according to the oldID, update the name to the new ID (i.e. if they never changed the name, we don't want to overwrite custom names)
+	-- 	-- 	v.name = self.barLabel.." "..k
+	-- 	-- end
+	-- 	v.oldId = nil
+	-- end
 
 	local index --find the location of our bar in the bar table
 	for i,v in ipairs(Neuron.bars) do

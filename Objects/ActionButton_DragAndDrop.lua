@@ -495,9 +495,12 @@ function ActionButton:SetMouseCursor()
 			return
 		end
 
-		PickupItem(GetItemInfoInstant(self.item))
-		if GetCursorInfo() then
-			return
+		local item = GetItemInfoInstant(self.item)
+		if item then
+			PickupItem(item)
+			if GetCursorInfo() then
+				return
+			end
 		end
 
 		if Neuron.itemCache[self.item:lower()] then --try to pull the spellID from our ItemCache as a last resort

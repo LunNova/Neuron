@@ -366,16 +366,21 @@ function Button:ApplyBindings()
 		virtualKey = DEFAULT_VIRTUAL_KEY
 	end
 
-	if self:IsVisible() or self:GetParent():GetAttribute("concealed") then
-		self.keys.hotKeys:gsub("[^:]+", function(key) SetOverrideBindingClick(self, self.keys.hotKeyPri, key, self:GetName(), virtualKey) end)
-	end
+	-- if self:IsVisible() or self:GetParent():GetAttribute("concealed") then
+	-- 	self.keys.hotKeys:gsub("[^:]+", function(key) SetOverrideBindingClick(self, self.keys.hotKeyPri, key, self:GetName(), virtualKey) end)
+	-- end
 
 	if not InCombatLockdown() then
 		self:SetAttribute("hotkeypri", self.keys.hotKeyPri)
 		self:SetAttribute("hotkeys", self.keys.hotKeys)
 	end
 
-	self.Hotkey:SetText(Button.hotKeyText(self.keys.hotKeys:match("^:([^:]+)") or ""))
+	local hkt = Button.hotKeyText(self.keys.hotKeys:match("^:([^:]+)") or "")
+	if hkt and hkt:len() > 0 then
+		--local action = self:GetAttribute("*macrotext*") or self:GetAttribute("*spellID*") or self.spellID or self.actionID or "unknown"
+		--print("ApplyBinding " .. action .. "" .. hkt .. " - " .. self.keys.hotKeys)
+	end
+	self.Hotkey:SetText(hkt)
 
 	if self.bar:GetShowBindText() then
 		self.Hotkey:Show()
@@ -613,8 +618,8 @@ function Button:UpdateUsableSpell()
 	elseif isUsable then
 		if self.bar:GetShowRangeIndicator() and IsSpellInRange(self.spell, self.unit) == 0 then
 			self.Icon:SetVertexColor(self.bar:GetRangeColor()[1], self.bar:GetRangeColor()[2], self.bar:GetRangeColor()[3])
-		elseif self.bar:GetShowRangeIndicator() and Neuron.spellCache[self.spell:lower()] and IsSpellInRange(Neuron.spellCache[self.spell:lower()].index,"spell", self.unit) == 0 then
-			self.Icon:SetVertexColor(self.bar:GetRangeColor()[1], self.bar:GetRangeColor()[2], self.bar:GetRangeColor()[3])
+		-- elseif self.bar:GetShowRangeIndicator() and Neuron.spellCache[self.spell:lower()] and IsSpellInRange(Neuron.spellCache[self.spell:lower()].index,"spell", self.unit) == 0 then
+		-- 	self.Icon:SetVertexColor(self.bar:GetRangeColor()[1], self.bar:GetRangeColor()[2], self.bar:GetRangeColor()[3])
 		else
 			self.Icon:SetVertexColor(1.0, 1.0, 1.0)
 		end
@@ -637,7 +642,11 @@ function Button:UpdateUsableItem()
 	if notEnoughMana and self.bar:GetManaColor() then
 		self.Icon:SetVertexColor(self.bar:GetManaColor()[1], self.bar:GetManaColor()[2], self.bar:GetManaColor()[3])
 	elseif isUsable then
-		if self.bar:GetShowRangeIndicator() and IsItemInRange(self.item, self.unit) == 0 then
+		-- range checking for items is not possible in combat
+		-- could use a spell iff a spell with right range to match is known?
+		if InCombatLockdown() then
+			self.Icon:SetVertexColor(1.0, 1.0, 1.0)
+		elseif self.bar:GetShowRangeIndicator() and IsItemInRange(self.item, self.unit) == 0 then
 			self.Icon:SetVertexColor(self.bar:GetRangeColor()[1], self.bar:GetRangeColor()[2], self.bar:GetRangeColor()[3])
 		elseif Neuron.itemCache[self.item:lower()] and self.bar:GetShowRangeIndicator() and IsItemInRange(Neuron.itemCache[self.item:lower()], self.unit) == 0 then
 			self.Icon:SetVertexColor(self.bar:GetRangeColor()[1], self.bar:GetRangeColor()[2], self.bar:GetRangeColor()[3])

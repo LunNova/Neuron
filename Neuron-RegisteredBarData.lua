@@ -37,82 +37,82 @@ function Neuron:RegisterBars(DB)
       objTemplate = Neuron.MenuButton,
       objMax = 11
     },]]
-    PetBar = {
-      class = "PetBar",
-      barType = "PetBar",
-      barLabel = L["Pet Bar"],
-      objType = "PetButton",
-      barDB = DB.PetBar,
-      objTemplate = Neuron.PetButton,
-      objMax = 10
-    },
-    XPBar = {
-      class = "XPBar",
-      barType = "XPBar",
-      barLabel = L["XP Bar"],
-      objType = "ExpButton",
-      barDB = DB.XPBar,
-      objTemplate = Neuron.ExpButton,
-      objMax = 10
-    },
-    RepBar = {
-      class = "RepBar",
-      barType = "RepBar",
-      barLabel = L["Rep Bar"],
-      objType = "RepButton",
-      barDB = DB.RepBar,
-      objTemplate = Neuron.RepButton,
-      objMax = 10
-    },
-    CastBar = {
-      class = "CastBar",
-      barType = "CastBar",
-      barLabel = L["Cast Bar"],
-      objType = "CastButton",
-      barDB = DB.CastBar,
-      objTemplate = Neuron.CastButton,
-      objMax = 10
-    },
-    MirrorBar = {
-      class = "MirrorBar",
-      barType = "MirrorBar",
-      barLabel = L["Mirror Bar"],
-      objType = "MirrorButton",
-      barDB = DB.MirrorBar,
-      objTemplate = Neuron.MirrorButton,
-      objMax = 10
-    },
+    -- PetBar = {
+    --   class = "PetBar",
+    --   barType = "PetBar",
+    --   barLabel = L["Pet Bar"],
+    --   objType = "PetButton",
+    --   barDB = DB.PetBar,
+    --   objTemplate = Neuron.PetButton,
+    --   objMax = 10
+    -- },
+    -- XPBar = {
+    --   class = "XPBar",
+    --   barType = "XPBar",
+    --   barLabel = L["XP Bar"],
+    --   objType = "ExpButton",
+    --   barDB = DB.XPBar,
+    --   objTemplate = Neuron.ExpButton,
+    --   objMax = 10
+    -- },
+    -- RepBar = {
+    --   class = "RepBar",
+    --   barType = "RepBar",
+    --   barLabel = L["Rep Bar"],
+    --   objType = "RepButton",
+    --   barDB = DB.RepBar,
+    --   objTemplate = Neuron.RepButton,
+    --   objMax = 10
+    -- },
+    -- CastBar = {
+    --   class = "CastBar",
+    --   barType = "CastBar",
+    --   barLabel = L["Cast Bar"],
+    --   objType = "CastButton",
+    --   barDB = DB.CastBar,
+    --   objTemplate = Neuron.CastButton,
+    --   objMax = 10
+    -- },
+    -- MirrorBar = {
+    --   class = "MirrorBar",
+    --   barType = "MirrorBar",
+    --   barLabel = L["Mirror Bar"],
+    --   objType = "MirrorButton",
+    --   barDB = DB.MirrorBar,
+    --   objTemplate = Neuron.MirrorButton,
+    --   objMax = 10
+    -- },
   }
 
 	if Neuron.isWoWRetail then
     MergeTable(allBars, {
-      ZoneAbilityBar = {
-        class = "ZoneAbilityBar",
-        barType = "ZoneAbilityBar",
-        barLabel = L["Zone Action Bar"],
-        objType = "ZoneActionButton",
-        barDB = DB.ZoneAbilityBar,
-        objTemplate = Neuron.ZoneAbilityButton,
-        objMax = 5, true
-      },
-      ExtraBar = {
-        class = "ExtraBar",
-        barType = "ExtraBar",
-        barLabel = L["Extra Action Bar"],
-        objType = "ExtraActionButton",
-        barDB = DB.ExtraBar,
-        objTemplate = Neuron.ExtraButton,
-        objMax = 1
-      },
-      ExitBar = {
-        class = "ExitBar",
-        barType = "ExitBar",
-        barLabel = L["Vehicle Exit Bar"],
-        objType = "VehicleExitButton",
-        barDB = DB.ExitBar,
-        objTemplate = Neuron.ExitButton,
-        objMax = 1
-      },
+      -- ZoneAbilityBar = {
+      --   class = "ZoneAbilityBar",
+      --   barType = "ZoneAbilityBar",
+      --   barLabel = L["Zone Action Bar"],
+      --   objType = "ZoneActionButton",
+      --   barDB = DB.ZoneAbilityBar,
+      --   objTemplate = Neuron.ZoneAbilityButton,
+      --   objMax = 5, true
+      -- },
+      -- ExtraBar = {
+      --   class = "ExtraBar",
+      --   barType = "ExtraBar",
+      --   barLabel = L["Extra Action Bar"],
+      --   objType = "ExtraActionButton",
+      --   barDB = DB.ExtraBar,
+      --   objTemplate = Neuron.ExtraButton,
+      --   objMax = 1
+      -- },
+      -- ExitBar = {
+      --   class = "ExitBar",
+      --   barType = "ExitBar",
+      --   barLabel = L["Vehicle Exit Bar"],
+      --   objType = "VehicleExitButton",
+      --   barDB = DB.ExitBar,
+      --   objTemplate = Neuron.ExitButton,
+      --   objMax = 1
+      -- },
     })
   end
 
